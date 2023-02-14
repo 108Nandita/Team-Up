@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {useContext} from 'react';
 
 function Button ({ children, clickHandler, isDisabled }) {
+
     return (
         <button
             type="button"
