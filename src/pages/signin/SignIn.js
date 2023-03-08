@@ -31,29 +31,30 @@ function SignIn() {
 
     return (
         <body >
-<header class="outer-container">
-    <div class="inner-container">
-            <img src={teamBuildingLogo} alt="Logo Building" />
-    </div>
-</header>
-<br/>
+        <header class="outer-container">
+            <div class="inner-container">
+                <img src={teamBuildingLogo} alt="Logo Building" />
+            </div>
+        </header>
+        <br/>
 
-<main class="outer-container">
-    <div class="inner-container">
-            <h1>Login</h1>
-            <form onSubmit={ handleLogin }>
-                <input placeholder="Username" type="username" value={ username } onChange={ e => setUsername( e.target.value ) }/>
-                <br/>
-                <input placeholder="Password" type="password" value={ password } onChange={ e => setPassword( e.target.value ) }/>
-                <br/>
-                <button type="submit">Login</button>
-            </form>
+        <main class="outer-container">
+            <div class="inner-container">
+                <h1>Login</h1>
+                <form onSubmit={ handleLogin }>
+                    <input placeholder="Username" type="username" value={ username } onChange={ e => setUsername( e.target.value ) }/>
+                    <br/>
+                    <input placeholder="Password" type="password" value={ password } onChange={ e => setPassword( e.target.value ) }/>
+                    <br/>
+                    <button type="submit">Login</button>
+                </form>
 
-            <p>Heb je nog geen account? <Link to="/register">Registreer</Link> je dan eerst.</p>
-    </div>
+                <p>Heb je nog geen account? <Link to="/register">Registreer</Link> je dan eerst.</p>
+            </div>
         </main>
         </body>
     );
 }
 
 export default SignIn;
+

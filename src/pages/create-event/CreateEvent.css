@@ -1,0 +1,42 @@
+.inner-container1 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: center;
+    align-items: center;
+    flex-basis: 900px;
+    padding: 20px;
+}
+
+#amountParticipants {
+    background-color: #ff9900;
+    border: none;
+    color: white;
+    font-size: 2em;
+    padding: 20px;
+}
+
+.increment {
+    background-color: #3cb371;
+    border: none;
+    color: white;
+    font-size: 2em;
+    padding: 20px;
+}
+
+.decrement {
+    background-color: #dc143c;
+    border: none;
+    color: white;
+    font-size: 2em;
+    padding: 20px;
+}
+
+.red {
+    color: red;
+}
+
+.green {
+    color: green;
+}
+

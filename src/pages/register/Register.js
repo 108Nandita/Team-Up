@@ -38,50 +38,51 @@ function Register() {
         <>
             <body className="outer-container">
 
-                <form className="inner-container" onSubmit={registerUser}>
+            <form className="inner-container" onSubmit={registerUser}>
 
-                    <h1>Registreren</h1>
+                <h1>Registreren</h1>
 
-                    <input
-                        placeholder="Email"
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
+                <input
+                    placeholder="Email"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                />
 
-                    <br/>
+                <br/>
 
-                    <input
-                        placeholder="Username"
-                        type="text"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                    />
+                <input
+                    placeholder="Username"
+                    type="text"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                />
 
-                    <br/>
+                <br/>
 
-                    <input
-                        placeholder="Password"
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
+                <input
+                    placeholder="Password"
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                />
 
-                    <br/>
+                <br/>
 
-                    <select value={role} onChange={(e) => setRole(e.target.value)}>
-                        <option value="">Select a role</option>
-                        <option value="user">User</option>
-                        <option value="admin">Admin</option>
-                    </select>
+                <select value={role} onChange={(e) => setRole(e.target.value)}>
+                    <option value="">Select a role</option>
+                    <option value="user">User</option>
+                    <option value="admin">Admin</option>
+                </select>
 
-                    <br/>
+                <br/>
 
-                    <button type="submit">Sign Up</button>
-                </form>
+                <button type="submit">Sign Up</button>
+            </form>
             </body>
         </>
     );
 }
 
 export default Register;
+

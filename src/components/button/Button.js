@@ -1,12 +1,14 @@
 import React, {useContext} from 'react';
 
-function Button ({ children, clickHandler, isDisabled }) {
+function Button ({ children, clickHandler, isDisabled, className,width }) {
 
     return (
         <button
             type="button"
+            className={className}
             disabled={isDisabled}
             onClick={clickHandler}
+            width={width}
         >
             { children }
         </button>
@@ -14,3 +16,4 @@ function Button ({ children, clickHandler, isDisabled }) {
 }
 
 export default Button;
+
