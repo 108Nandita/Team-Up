@@ -1,0 +1,9 @@
+#logoBuilding {
+    scale: 63%;
+}
+
+.error {
+    color: red;
+    font-size: 18px;
+    min-height: 16px;
+}
