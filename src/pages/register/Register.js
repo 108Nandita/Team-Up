@@ -1,20 +1,47 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import {useNavigate} from 'react-router-dom';
-import { AuthContext } from "../../context/AuthContext";
 import axios from "axios";
+import registerStyle from './Register.css'
 
 function Register() {
     const [email, setEmail] = useState("");
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [role, setRole] = useState([""]);
+    const [role, setRole] = useState("");
 
     const navigate = useNavigate();
 
-    const { login } = useContext(AuthContext);
+    const [emailError, setEmailError] = useState("");
+    const [usernameError, setUsernameError] = useState("");
+    const [passwordError, setPasswordError] = useState("");
 
     async function registerUser(e) {
         e.preventDefault();
+
+        // check of de email een @ bevat
+        if (!email.includes('@')) {
+            setEmailError('Email mist een @');
+            return;
+        } else {
+            setEmailError('');
+        }
+
+        // check of de gebruikersnaam een @ bevat
+        if (username.includes('@')) {
+            setUsernameError('Gebruikersnaam mag geen @ bevatten');
+            return;
+        } else {
+            setUsernameError('');
+        }
+
+        // check of het wachtwoord minimaal 6 tekens bevat
+        if (password.length < 6) {
+            setPasswordError('Gebruik voor het wachtwoord minimaal 6 tekens');
+            return;
+        } else {
+            setPasswordError('');
+        }
+
         console.log("De gebruiker is geregistreerd 👤");
         try {
             const response = await axios.post(
@@ -23,7 +50,7 @@ function Register() {
                     email: email,
                     username: username,
                     password: password,
-                    role: ["user"],
+                    role: [role],
                 }
             );
             console.log("Response in register: " , response.data);
@@ -48,6 +75,7 @@ function Register() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                 />
+                {emailError && <p className="form-warning">{emailError}</p>}
 
                 <br/>
 
@@ -57,6 +85,7 @@ function Register() {
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                 />
+                {usernameError && <p className="form-warning">{usernameError}</p>}
 
                 <br/>
 
@@ -66,6 +95,7 @@ function Register() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                 />
+                {passwordError && <p className="form-warning">{passwordError}</p>}
 
                 <br/>
 
@@ -74,6 +104,7 @@ function Register() {
                     <option value="user">User</option>
                     <option value="admin">Admin</option>
                 </select>
+
 
                 <br/>
 
@@ -85,4 +116,3 @@ function Register() {
 }
 
 export default Register;
-
