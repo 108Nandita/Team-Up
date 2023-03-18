@@ -90,27 +90,39 @@ function Profile() {
 
             <main className="outer-container">
                 <form className="inner-container1, " onSubmit={updateUser}>
-                    <label style={{ display: "inline-block", width: "140px" }}>
-                        Username:
-                        <input
-                            type="text"
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
-                        />
-                    </label>
+                    <div className="position">
+                        <div>
+                            <label style={{ display: "inline-block", width: "140px" }}>
+                                Username:
+                                <input
+                                    type="text"
+                                    value={username}
+                                    onChange={(e) => setUsername(e.target.value)}
+                                />
+                            </label>
 
-                    <br/>
-                    <br/>
+                            <br/>
+                            <br/>
 
-                    <label style={{ display: "inline-block", width: "140px" }}>
-                        Email:
-                        <input
-                            type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                        />
-                    </label>
+                            <label style={{ display: "inline-block", width: "140px" }}>
+                                Email:
+                                <input
+                                    type="email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                />
+                            </label>
+                        </div>
 
+                        <br/>
+                        <br/>
+
+                        <div className=".profile-pic.inner-container1">
+                            {profilePic && (
+                                <img className="profile-picture" src={URL.createObjectURL(profilePic)} alt="Profielfoto" />
+                            )}
+                        </div>
+                    </div>
                     <br/>
                     <br/>
 
@@ -159,15 +171,6 @@ function Profile() {
                     <br/>
                 </form>
             </main>
-
-
-
-            <div className="profile-pic, inner-container1">
-                {profilePic && (
-                    <img className="profile-picture" src={URL.createObjectURL(profilePic)} alt="Profielfoto" />
-                )}
-            </div>
-
 
             <footer className="outer-container">
                 <div className="inner-container1">
