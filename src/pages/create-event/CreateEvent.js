@@ -35,23 +35,24 @@ function CreateEvent() {
 
     async function handleSubmit(e) {
         e.preventDefault();
-        const {companyName, city, amountParticipants, typeActivity, accessibility, dayPart, maxPrice} = formstate;
+        const { amountParticipants, typeActivity, accessibility, maxPrice} = formstate;
 
         // Call API with form inputs and store results in state
-        const apiUrl = "https://example-api.com/activities";
+        const apiUrl = "https://www.boredapi.com/api/activity";
         const queryParams = new URLSearchParams({
-            companyName,
-            city,
-            amountParticipants,
-            typeActivity,
-            accessibility,
-            dayPart,
-            maxPrice
+            type: formstate.typeActivity,
+            participants: formstate.amountParticipants,
+            price: formstate.maxPrice,
+            accessibility: formstate.accessibility
         });
+        const response = await fetch(`${apiUrl}?${queryParams}`);
+        const data = await response.json();
+        console.log(data);
 
         try {
             const response = await fetch(`${apiUrl}?${queryParams}`);
             const data = await response.json();
+            console.log(data);
             setActivities(data.activities);
             navigate('/activity-results', {
                 state: {
@@ -70,7 +71,7 @@ function CreateEvent() {
     return (
         <>
             <NavBar/>
-            <body>
+
             <header className="outer-container">
 
                 <div className="inner-container1">
@@ -111,12 +112,12 @@ function CreateEvent() {
                         <option value="option1">education</option>
                         <option value="option2">recreational</option>
                         <option value="option3">social</option>
-                        <option value="option3">diy</option>
-                        <option value="option3">charity</option>
-                        <option value="option3">cooking</option>
-                        <option value="option3">relaxation</option>
-                        <option value="option3">music</option>
-                        <option value="option3">busywork</option>
+                        <option value="option4">diy</option>
+                        <option value="option5">charity</option>
+                        <option value="option6">cooking</option>
+                        <option value="option7">relaxation</option>
+                        <option value="option8">music</option>
+                        <option value="option9">busywork</option>
                     </select>
 
                     <br/>
@@ -149,12 +150,12 @@ function CreateEvent() {
 
                     <Button isDisabled={false} clickHandler={() => {
                     }}>
-                        Submit
+                        Search
                     </Button>
                 </form>
 
             </main>
-            </body>
+
         </>
     );
 }

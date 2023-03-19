@@ -2,8 +2,11 @@
     border: 9px solid #23422c;
     color: #23422c;
 }
-.details {
-    border: 9px solid #23422c;
-    color: #23422c;
+
+.company-logo {
+    scale: 45%;
 }
 
+.header-company {
+    height: 180px;
+}

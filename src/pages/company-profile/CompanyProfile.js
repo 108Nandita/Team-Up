@@ -3,7 +3,7 @@ import Novi from '../../assets/Novi.png'
 import {useNavigate} from "react-router-dom";
 import NavBar from "../../components/nav-bar/NavBar";
 import Button from "../../components/button/Button";
-import Companyprofile from "./CompanyProfile.css"
+import companyprofile from "./CompanyProfile.css"
 
 function CompanyProfile() {
 
@@ -14,11 +14,11 @@ function CompanyProfile() {
         <>
             <NavBar/>
             <body>
-            <header className="outer-container">
+            <header className="outer-container header-company">
                 <div className="profile-container">
                     <h1 ><strong>Profile</strong></h1>
                     <br/>
-                    <img  src={Novi} alt="Novi"/>
+                    <img className="company-logo" id="company-logo"  src={Novi} alt="Novi"/>
                 </div>
             </header>
             <main className="outer-container">
