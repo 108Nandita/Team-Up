@@ -25,7 +25,7 @@ function App() {
                     <Route path="/company-profile" element={isAuth ? <CompanyProfile/> : <Navigate to="/"/>}/>
                     <Route path="/create-company" element={isAuth ? <CreateCompany/> : <Navigate to="/"/>}/>
                     <Route path="/create-event" element={isAuth ? <CreateEvent/> : <Navigate to="/"/>}/>
-                    <Route path="/activity-results" element={isAuth ? <ActivityResults/> : <Navigate to="/"/>}/>
+                    <Route path="/activity-results/:test" element={isAuth ? <ActivityResults/> : <Navigate to="/"/>}/>
                 </Routes>
             </div>
         </>

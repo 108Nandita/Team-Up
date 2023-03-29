@@ -33,30 +33,32 @@ function SignIn() {
     }
 
     return (
-        <body >
-        <header className="outer-container">
-            <div className="inner-container">
-                <img src={teamBuildingLogo} alt="Logo Building" id="logoBuilding"/>
-            </div>
-        </header>
-        <br/>
+        <>
+            <header className="outer-container">
+                <div className="inner-container">
+                    <img src={teamBuildingLogo} alt="Logo Building" id="logoBuilding"/>
+                </div>
+            </header>
+            <br/>
 
-        <main className="outer-container">
-            <div className="inner-container">
-                <h1>Login</h1>
-                {error && <div className="error">{error}</div>}
-                <form onSubmit={ handleLogin }>
-                    <input placeholder="Username" type="username" value={ username } onChange={ e => setUsername( e.target.value ) }/>
-                    <br/>
-                    <input placeholder="Password" type="password" value={ password } onChange={ e => setPassword( e.target.value ) }/>
-                    <br/>
-                    <button type="submit">Login</button>
-                </form>
+            <body>
+            <main className="outer-container">
+                <div className="inner-container">
+                    <h1>Login</h1>
+                    {error && <div className="error">{error}</div>}
+                    <form onSubmit={ handleLogin }>
+                        <input placeholder="Username" type="username" value={ username } onChange={ e => setUsername( e.target.value ) }/>
+                        <br/>
+                        <input placeholder="Password" type="password" value={ password } onChange={ e => setPassword( e.target.value ) }/>
+                        <br/>
+                        <button type="submit">Login</button>
+                    </form>
 
-                <p>Heb je nog geen account? <Link to="/register">Registreer</Link> je dan eerst.</p>
-            </div>
-        </main>
-        </body>
+                    <p>Heb je nog geen account? <Link to="/register">Registreer</Link> je dan eerst.</p>
+                </div>
+            </main>
+            </body>
+        </>
     );
 }
 

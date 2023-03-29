@@ -15,7 +15,7 @@ function Home() {
         <>
             <NavBar/>
             <body className="outer-container" >
-            <header className="inner-container">
+            <header className="inner-container" >
                 <div>
                     <img className="home-image"  src={teambuilding} alt="Team Building"/>
                 </div>
