@@ -1,161 +1,189 @@
-import React, {useState} from 'react';
-import Button from "../../components/button/Button";
-import {useNavigate} from "react-router-dom";
-import NavBar from "../../components/nav-bar/NavBar";
+import React, { useState } from 'react';
+import Button from '../../components/button/Button';
+import { useNavigate } from 'react-router-dom';
+import NavBar from '../../components/nav-bar/NavBar';
+import axios from 'axios';
+import createevent from "./CreateEvent.css"
+
 
 function CreateEvent() {
-
     const navigate = useNavigate();
-
+    const [data, setData] = useState({});
     const [formstate, setFormstate] = useState({
-        companyName: "",
-        city: "",
-        amountParticipants: 0,
-        typeActivity: "",
-        accessibility: "",
-        dayPart: "",
-        maxPrice: 0,
+        category: '',
+        location: '',
+        start: '',
+        end: '',
+        within: '',
+        limit: '',
     });
 
-    const [activities, setActivities] = useState([]);
-
     function handleFormChange(e) {
-        const changedFieldName = e.target.name;
-        let newValue = e.target.type === "checkbox" ? e.target.checked : e.target.value;
-
-        if (changedFieldName === "amountParticipants") {
-            newValue = isNaN(newValue) ? 0 : Math.min(Math.max(parseInt(newValue), 0), 20);
-        }
-
-        setFormstate({
-            ...formstate,
-            [changedFieldName]: newValue,
-        });
+        const { name, value } = e.target;
+        setFormstate((prevFormstate) => ({ ...prevFormstate, [name]: value }));
     }
 
     async function handleSubmit(e) {
         e.preventDefault();
-        const {companyName, city, amountParticipants, typeActivity, accessibility, dayPart, maxPrice} = formstate;
-
-        // Call API with form inputs and store results in state
-        const apiUrl = "https://example-api.com/activities";
-        const queryParams = new URLSearchParams({
-            companyName,
-            city,
-            amountParticipants,
-            typeActivity,
-            accessibility,
-            dayPart,
-            maxPrice
-        });
+        const { category, location, start, end, within, limit } = formstate;
+        const apikey = 'lhOE6Uv3BMZ_6valBREVlSaF05lYHlljr3DQJIvN';
 
         try {
-            const response = await fetch(`${apiUrl}?${queryParams}`);
-            const data = await response.json();
-            setActivities(data.activities);
-            navigate('/activity-results', {
-                state: {
-                    type: typeActivity,
-                    participants: amountParticipants,
-                    price: 0,
-                    accessibility: accessibility,
-                    maxprice: maxPrice
-                }
+            const params = {};
+
+            if (category) {
+                params.category = category;
+            }
+
+            if (location) {
+                const locationResponse = await axios.get(`https://nominatim.openstreetmap.org/search?q=${location}&format=json&limit=1`);
+                const { lat, lon } = locationResponse.data[0];
+                params['location_around.origin'] = `${lat},${lon}`;
+            }
+
+            if (start) {
+                params.start = start;
+            }
+
+            if (end) {
+                params.end = end;
+            }
+
+            if (within) {
+                const locationResponse = await axios.get(`https://nominatim.openstreetmap.org/search?q=${location}&format=json&limit=1`);
+                const { lat, lon } = locationResponse.data[0];
+                console.log(locationResponse)
+                params.within = `${within}km@${lat},${lon}`;
+            }
+
+            if (limit) {
+                params.limit = limit;
+            }
+
+            const response = await axios.get(`https://api.predicthq.com/v1/events/?category=${category}&location=${location}&start=${start}&end=${end}&within=${within}&limit=${limit}&`, {
+                headers: {
+                    Authorization: `Bearer ${apikey}`,
+                    Accept: 'application/json',
+                },
+                params,
             });
-        } catch (error) {
-            console.error(error);
+
+            const responseData = { data: response.data };
+            setData(responseData.data);
+            console.log(responseData)
+        } catch (e) {
+            console.error(e);
         }
     }
-
     return (
         <>
-            <NavBar/>
-            <body>
-            <header className="outer-container">
+            <NavBar />
 
-                <div className="inner-container1">
-                    <br/>
-                    <br/>
-                    <Button className="details" isDisabled={false} clickHandler={() => navigate('/create-event')}>
-                        <strong>Create Event</strong>
-                    </Button>
-                    <Button isDisabled={false} clickHandler={() => navigate('/create-company')}>
-                        Create Company
-                    </Button>
-                </div>
-            </header>
-            <main className="outer-container">
+            { data.results?.length > 0 ?
+                <>
+                    <body className="outer-container" >
+                    <header className="inner-container1" >
 
-                <form className="inner-container1" onSubmit={handleSubmit}>
-                    <br/>
-                    <br/>
-                    <label htmlFor="companyName" style={{display: "inline-block", width: "140px"}}>Company name:</label>
-                    <input type="text" name="companyName" id="companyName" value={formstate.companyName}
-                           onChange={handleFormChange}/>
-                    <br/>
-                    <br/>
-                    <label htmlFor="city" style={{display: "inline-block", width: "140px"}}>City:</label>
-                    <input type="text" name="city" id="city" value={formstate.city} onChange={handleFormChange}/>
-                    <br/>
-                    <br/>
-                    <label htmlFor="amountParticipants" style={{display: "inline-block", width: "140px"}}>Amount of
-                        participants:</label>
-                    <input type="number" name="amountParticipants" id="amountParticipants"
-                           value={formstate.amountParticipants} onChange={handleFormChange}/>
-                    <br/>
-                    <br/>
-                    <label htmlFor="typeActivity" style={{display: "inline-block", width: "140px"}}>Type of
-                        activity:</label>
-                    <select name="typeActivity" id="typeActivity" value={formstate.typeActivity}
-                            onChange={handleFormChange}>
-                        <option value="option1">education</option>
-                        <option value="option2">recreational</option>
-                        <option value="option3">social</option>
-                        <option value="option3">diy</option>
-                        <option value="option3">charity</option>
-                        <option value="option3">cooking</option>
-                        <option value="option3">relaxation</option>
-                        <option value="option3">music</option>
-                        <option value="option3">busywork</option>
-                    </select>
 
+                    </header>
+
+                    <main className="inner-container">
+                        <h1>Results:</h1>
+                        <button type="button" onClick={() => setData([])}>
+                            Back to the form
+                        </button>
+                        <ul>
+                            {data.results &&
+                                data.results.map((event) => (
+                                    <li className="result-view" key={event.id}>
+                                        <p className="results">{event.title}</p>
+                                        <p className="results">{event.category}</p>
+                                        <p className="results">{event.description}</p>
+                                        <p className="results">{event.start}</p>
+                                        </li>
+                                ))}
+                        </ul>
+
+                    </main>
+
+                    </body>
+                </>
+             :
+                <>
+                    <body >
+                    <header className="outer-container" >
+                        <div className="inner-container1">
+
+                            <Button className="details" isDisabled={false} clickHandler={() =>
+                                navigate('/create-event')}>
+                                <strong>Create Event</strong>
+                            </Button>
+                            <Button isDisabled={false} clickHandler={() => navigate('/create-company')}>
+                                Create Company
+                            </Button>
+                            <h1>Search for events:</h1>
+                        </div>
+
+                    </header>
                     <br/>
                     <br/>
-
-                    <label htmlFor="accessibility"
-                           style={{display: "inline-block", width: "140px"}}>Accessability:</label>
-                    <input type="number" name="accessibility" id="accessibility" min="0" max="1" step="0.05"
-                           value={formstate.accessibility} onChange={handleFormChange}/>
-
-                    <br/>
-                    <br/>
-
-                    <label htmlFor="dayPart" style={{display: "inline-block", width: "140px"}}>Day part:</label>
-                    <select name="dayPart" id="dayPart" value={formstate.dayPart} onChange={handleFormChange}>
-                        <option value="">Select an option</option>
-                        <option value="morning">1 part</option>
-                        <option value="afternoon">2 day parts</option>
-                    </select>
-
-                    <br/>
-                    <br/>
-
-                    <label htmlFor="maxPrice" style={{display: "inline-block", width: "140px"}}>Maximum price:</label>
-                    <input type="number" name="maxPrice" id="maxPrice" min="0" max="1" step="0.05"
-                           value={formstate.maxPrice} onChange={handleFormChange}/>
-
-                    <br/>
-                    <br/>
-
-                    <Button isDisabled={false} clickHandler={() => {
-                    }}>
-                        Submit
-                    </Button>
-                </form>
-
-            </main>
-            </body>
+                    <main className="outer-container" >
+                        <form className="inner-container1" onSubmit={handleSubmit}>
+                            <label htmlFor="category">Category:</label>
+                            <select name="category" id="category" value={formstate.category} onChange=
+                                {handleFormChange}>
+                                <option value="">--Select a category--</option>
+                                <option value="concerts">Concerts</option>
+                                <option value="sports">Sports</option>
+                                <option value="festivals">Festivals</option>
+                                <option value="conferences">Conferences</option>
+                            </select>
+                            <br />
+                            <br />
+                            <label htmlFor="location">Location:</label>
+                            <input type="text" name="location" id="location" value={formstate.location} onChange=
+                                {handleFormChange} />
+                            <br />
+                            <br />
+                            <label htmlFor="start">Start:</label>
+                            <input type="date" name="start" id="start" value={formstate.start} onChange=
+                                {handleFormChange} />
+                            <br />
+                            <br />
+                            <label htmlFor="end">End:</label>
+                            <input type="date" name="end" id="end" value={formstate.end} onChange=
+                                {handleFormChange} />
+                            <br />
+                            <br />
+                            <label htmlFor="within">Within:</label>
+                            <select name="within" id="within" value={formstate.within} onChange=
+                                {handleFormChange}>
+                                <option value="10km">10km</option>
+                                <option value="20km">20km</option>
+                                <option value="50km">50km</option>
+                                <option value="100km">100km</option>
+                            </select>
+                            <br />
+                            <br />
+                            <label htmlFor="limit">Limit:</label> <select name="limit" id="limit" value={formstate.limit} onChange=
+                            {handleFormChange}>
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+                            <br />
+                            <br />
+                            <Button isDisabled={false} clickHandler={handleSubmit}>
+                                Search
+                            </Button>
+                        </form>
+                    </main>
+                    </body>
+                </>
+            }
         </>
+
     );
 }
 

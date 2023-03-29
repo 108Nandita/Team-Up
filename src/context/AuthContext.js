@@ -53,7 +53,7 @@ function AuthContextProvider({ children }) {
             if (redirect) {
                 navigate(redirect)
             }
-            console.log(response)
+            // console.log(response)
         } catch (e) {
             console.error(e)
             setAuth({

@@ -7,6 +7,7 @@ import iconProfile from '../../assets/ProfilelIcon.png';
 import iconLogout from '../../assets/LogOutIcon.png';
 import axios from 'axios';
 
+
 function NavBar() {
     const { logout, user } = useContext(AuthContext);
     const navigate = useNavigate();
