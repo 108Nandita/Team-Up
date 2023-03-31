@@ -28,6 +28,14 @@ function CreateEvent() {
         const { category, location, start, end, within, limit } = formstate;
         const apikey = 'lhOE6Uv3BMZ_6valBREVlSaF05lYHlljr3DQJIvN';
 
+
+        if (start && end && start > end) {
+            alert('Start date must be before or equal to end date');
+            const today = new Date();
+            const currentDate = today.toISOString().slice(0, 10);
+            setFormstate((prevFormstate) => ({ ...prevFormstate, start: currentDate, end: currentDate }));
+            return;        }
+
         try {
             const params = {};
 
@@ -98,8 +106,9 @@ function CreateEvent() {
                                     <li className="result-view" key={event.id}>
                                         <p className="results">{event.title}</p>
                                         <p className="results">{event.category}</p>
-                                        <p className="results">{event.description}</p>
+                                        <p className="results">{event.labels.join(" ")}</p>
                                         <p className="results">{event.start}</p>
+                                        <p className="results">{event.end}</p>
                                         </li>
                                 ))}
                         </ul>

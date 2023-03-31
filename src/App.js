@@ -6,7 +6,7 @@ import Home from './pages/home/Home';
 import CompanyProfile from './pages/company-profile/CompanyProfile';
 import CreateCompany from './pages/create-company/CreateCompany';
 import CreateEvent from './pages/create-event/CreateEvent';
-import ActivityResults from './pages/create-event/ActivityResults';
+import Share from './pages/share/Share';
 import Profile from './pages/profile/Profile';
 import './App.css';
 import { AuthContext } from "./context/AuthContext";
@@ -25,7 +25,7 @@ function App() {
                     <Route path="/company-profile" element={isAuth ? <CompanyProfile/> : <Navigate to="/"/>}/>
                     <Route path="/create-company" element={isAuth ? <CreateCompany/> : <Navigate to="/"/>}/>
                     <Route path="/create-event" element={isAuth ? <CreateEvent/> : <Navigate to="/"/>}/>
-                    <Route path="/activity-results/:test" element={isAuth ? <ActivityResults/> : <Navigate to="/"/>}/>
+                    <Route path="/share" element={isAuth ? <Share/> : <Navigate to="/"/>}/>
                 </Routes>
             </div>
         </>
