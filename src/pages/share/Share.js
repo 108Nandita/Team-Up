@@ -1,17 +1,27 @@
 import React from "react";
-import ChatWidget from "../../components/chat/Chat";
-import ShareStyle from "./ShareStyle.css";
+import "./ShareStyle.css";
+import NavBar from "../../components/nav-bar/NavBar";
+import Widget from "../../components/chat/Chat";
 
 const Share = () => {
     return (
-        <div className="outer-container">
-            <main className="inner-container">
-                <h1>Share your thoughts</h1>
-                <div className="chat-container">
-                    <ChatWidget />
-                </div>
-            </main>
-        </div>
+        <>
+            <NavBar />
+            <div className="outer-container">
+                <main className="inner-container">
+                    <div className="share-container">
+                        <div className="share-content">
+                            <h1>Share your thoughts</h1>
+                            <p className="chat-direction">Click down below for chatting!</p>
+                        </div>
+                    </div>
+                    <div className="chat-container">
+                        <Widget />
+                    </div>
+                </main>
+            </div>
+        </>
     );
 };
+
 export default Share;

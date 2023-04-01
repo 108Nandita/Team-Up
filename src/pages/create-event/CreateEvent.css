@@ -41,7 +41,12 @@
 
 .result-view {
     border-style: solid;
+    border-radius: 12px;
     border-color: #23422c;
     column-count: 2;
+    margin-bottom: 20px;
+}
 
+ul.result-list {
+    list-style: none;
 }

@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
-import Chat from "./Chat.css";
 
-const ChatWidget = () => {
+const Widget = () => {
     useEffect(() => {
         const s = document.createElement("script");
         s.type = "text/javascript";
@@ -15,4 +14,4 @@ const ChatWidget = () => {
     return <div className="chat-widget" />;
 };
 
-export default ChatWidget;
+export default Widget;

@@ -100,7 +100,7 @@ function CreateEvent() {
                         <button type="button" onClick={() => setData([])}>
                             Back to the form
                         </button>
-                        <ul>
+                        <ul className="result-list">
                             {data.results &&
                                 data.results.map((event) => (
                                     <li className="result-view" key={event.id}>
@@ -138,7 +138,7 @@ function CreateEvent() {
                     <br/>
                     <main className="outer-container" >
                         <form className="inner-container1" onSubmit={handleSubmit}>
-                            <label htmlFor="category">Category:</label>
+                            <label htmlFor="category" style={{ display: "inline-block", width: "140px" }}>Category:</label>
                             <select name="category" id="category" value={formstate.category} onChange=
                                 {handleFormChange}>
                                 <option value="">--Select a category--</option>
@@ -149,22 +149,22 @@ function CreateEvent() {
                             </select>
                             <br />
                             <br />
-                            <label htmlFor="location">Location:</label>
+                            <label htmlFor="location" style={{ display: "inline-block", width: "140px" }}>Location:</label>
                             <input type="text" name="location" id="location" value={formstate.location} onChange=
                                 {handleFormChange} />
                             <br />
                             <br />
-                            <label htmlFor="start">Start:</label>
+                            <label htmlFor="start" style={{ display: "inline-block", width: "140px" }}>Start:</label>
                             <input type="date" name="start" id="start" value={formstate.start} onChange=
                                 {handleFormChange} />
                             <br />
                             <br />
-                            <label htmlFor="end">End:</label>
+                            <label htmlFor="end" style={{ display: "inline-block", width: "140px" }}>End:</label>
                             <input type="date" name="end" id="end" value={formstate.end} onChange=
                                 {handleFormChange} />
                             <br />
                             <br />
-                            <label htmlFor="within">Within:</label>
+                            <label htmlFor="within" style={{ display: "inline-block", width: "140px" }}>Within:</label>
                             <select name="within" id="within" value={formstate.within} onChange=
                                 {handleFormChange}>
                                 <option value="10km">10km</option>
@@ -174,7 +174,7 @@ function CreateEvent() {
                             </select>
                             <br />
                             <br />
-                            <label htmlFor="limit">Limit:</label> <select name="limit" id="limit" value={formstate.limit} onChange=
+                            <label htmlFor="limit" style={{ display: "inline-block", width: "140px" }}>Limit:</label> <select name="limit" id="limit" value={formstate.limit} onChange=
                             {handleFormChange}>
                             <option value="10">10</option>
                             <option value="20">20</option>
