@@ -44,7 +44,7 @@ function Home() {
                     </section>
 
                     <section>
-                        <Button className="home-button" isDisabled={false} clickHandler={() => navigate('/home 1')}>
+                        <Button className="home-button" isDisabled={false} clickHandler={() => navigate('/share')}>
                             Share
                         </Button>
                     </section>
