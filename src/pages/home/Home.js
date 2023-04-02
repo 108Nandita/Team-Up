@@ -24,7 +24,7 @@ function Home() {
                 <div>
 
                     <section>
-                        <Button className="home-button" isDisabled={false} clickHandler={() => navigate('/home')}>
+                        <Button className="home-button" isDisabled={false} clickHandler={() => navigate('/event')}>
                             Event
                         </Button>
                     </section>
