@@ -104,12 +104,14 @@ function CreateEvent() {
                             {data.results &&
                                 data.results.map((event) => (
                                     <li className="result-view" key={event.id}>
-                                        <p className="results">{event.title}</p>
+                                        <a href={event.url} target="_blank" rel="noopener noreferrer">
+                                            <p className="results">{event.title}</p>
+                                        </a>
                                         <p className="results">{event.category}</p>
                                         <p className="results">{event.labels.join(" ")}</p>
                                         <p className="results">{event.start}</p>
                                         <p className="results">{event.end}</p>
-                                        </li>
+                                    </li>
                                 ))}
                         </ul>
 
