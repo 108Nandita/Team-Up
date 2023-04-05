@@ -6,7 +6,7 @@ import Widget from "../../components/chat/Chat";
 const Share = () => {
     return (
         <>
-            <NavBar />
+            <NavBar/>
             <div className="outer-container">
                 <main className="inner-container">
                     <div className="share-container">
@@ -16,7 +16,7 @@ const Share = () => {
                         </div>
                     </div>
                     <div className="chat-container">
-                        <Widget />
+                        <Widget/>
                     </div>
                 </main>
             </div>

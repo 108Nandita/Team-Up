@@ -1,4 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Jua&family=Quicksand&display=swap');
 
+* {
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Jua', sans-serif;
+}
 
 .outer-container {
     display: flex;
@@ -20,6 +26,20 @@
 }
 
 
+button {
+    background-color: #04AA6D;
+    border: none;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    border-radius: 12px;
+    font-family: 'Jua', sans-serif;
+}
+
 
 nav {
     background-color: white;
@@ -31,26 +51,18 @@ nav {
     font-family: 'Jua', sans-serif;
 }
 
-nav a,
-nav a:visited,
-nav a:active {
-    color: white;
-}
-
-
 .logo-container {
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 200px;
-
 }
 
 .logo-container img {
     width: 40px;
     margin: 8px;
     padding-bottom: 10px;
-
 }
+
 
 

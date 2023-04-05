@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import teamBuildingLogo from '../../assets/TeamBuildingLogo.png'
 import signInStyle from './SignIn.css'
 
+
 function SignIn() {
 
     const [ username, setUsername ] = useState( "" )
@@ -15,6 +16,7 @@ function SignIn() {
     const navigate = useNavigate();
 
     const { login } = useContext( AuthContext )
+
 
     async function handleLogin(e) {
         e.preventDefault()
@@ -46,12 +48,17 @@ function SignIn() {
                 <div className="inner-container">
                     <h1>Login</h1>
                     {error && <div className="error">{error}</div>}
+                    <br/><br/>
                     <form onSubmit={ handleLogin }>
                         <input placeholder="Username" type="username" value={ username } onChange={ e => setUsername( e.target.value ) }/>
                         <br/>
+                        <br/>
                         <input placeholder="Password" type="password" value={ password } onChange={ e => setPassword( e.target.value ) }/>
                         <br/>
+                        <br/>
                         <button type="submit">Login</button>
+                        <br/>
+                        <br/>
                     </form>
 
                     <p>Heb je nog geen account? <Link to="/register">Registreer</Link> je dan eerst.</p>

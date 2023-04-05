@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 
-function Button ({ children, clickHandler, isDisabled, className,width }) {
+function Button({children, clickHandler, isDisabled, className, width}) {
 
     return (
         <button
@@ -10,7 +10,7 @@ function Button ({ children, clickHandler, isDisabled, className,width }) {
             onClick={clickHandler}
             width={width}
         >
-            { children }
+            {children}
         </button>
     );
 }

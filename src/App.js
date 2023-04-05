@@ -12,6 +12,7 @@ import Profile from './pages/profile/Profile';
 import './App.css';
 import { AuthContext } from "./context/AuthContext";
 
+
 function App() {
     const {isAuth} = useContext(AuthContext);
 

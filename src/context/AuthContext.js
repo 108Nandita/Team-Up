@@ -4,7 +4,7 @@ import axios from "axios";
 
 export const AuthContext = createContext({});
 
-function AuthContextProvider({ children }) {
+function AuthContextProvider({children}) {
     const [auth, setAuth] = useState({
         isAuth: false,
         user: null,
@@ -17,9 +17,9 @@ function AuthContextProvider({ children }) {
 
         const storedToken = localStorage.getItem('token')
 
-        if ( storedToken ) {
-            console.log( "De gebruiker is NOG STEEDS ingelogd" )
-            void fetchUserData( storedToken);
+        if (storedToken) {
+            console.log("De gebruiker is NOG STEEDS ingelogd")
+            void fetchUserData(storedToken);
         } else {
             setAuth({
                 ...auth,
@@ -31,7 +31,7 @@ function AuthContextProvider({ children }) {
     }, [])
 
 
-    async function fetchUserData( jwt, redirect ) {
+    async function fetchUserData(jwt, redirect) {
         try {
             const response = await axios.get('https://frontend-educational-backend.herokuapp.com/api/user', {
                 headers: {
@@ -53,7 +53,7 @@ function AuthContextProvider({ children }) {
             if (redirect) {
                 navigate(redirect)
             }
-            // console.log(response)
+
         } catch (e) {
             console.error(e)
             setAuth({
@@ -74,13 +74,13 @@ function AuthContextProvider({ children }) {
     }
 
 
-    function logout ( ) {
+    function logout() {
         console.log("De gebruiker is uitgelogd")
-        localStorage.removeItem('token' )
+        localStorage.removeItem('token')
         setAuth({
             ...auth,
             isAuth: false,
-            user:null,
+            user: null,
             status: "done"
         })
         navigate("/signin")
@@ -96,7 +96,7 @@ function AuthContextProvider({ children }) {
 
     return (
         <AuthContext.Provider value={contextData}>
-            { auth.status === "done" ? children : <p>Loading...</p>}
+            {auth.status === "done" ? children : <p>Loading...</p>}
         </AuthContext.Provider>
     )
 }
