@@ -18,7 +18,6 @@ function Register() {
     async function registerUser(e) {
         e.preventDefault();
 
-        // check of de email een @ bevat
         if (!email.includes('@')) {
             setEmailError('Email mist een @');
             return;
@@ -26,7 +25,6 @@ function Register() {
             setEmailError('');
         }
 
-        // check of de gebruikersnaam een @ bevat
         if (username.includes('@')) {
             setUsernameError('Gebruikersnaam mag geen @ bevatten');
             return;
@@ -34,7 +32,6 @@ function Register() {
             setUsernameError('');
         }
 
-        // check of het wachtwoord minimaal 6 tekens bevat
         if (password.length < 6) {
             setPasswordError('Gebruik voor het wachtwoord minimaal 6 tekens');
             return;
@@ -65,7 +62,7 @@ function Register() {
         <>
             <body className="outer-container">
 
-            <form className="inner-container" onSubmit={registerUser}>
+            <form className="inner-container-register" onSubmit={registerUser}>
 
                 <h1>Registreren</h1>
 

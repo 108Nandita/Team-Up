@@ -1,5 +1,4 @@
 
-
 #amountParticipants {
     background-color: #ff9900;
     border: none;
@@ -49,4 +48,9 @@
 
 ul.result-list {
     list-style: none;
+}
+
+.obliged {
+    border-style: solid;
+    border-color: #23422c;
 }

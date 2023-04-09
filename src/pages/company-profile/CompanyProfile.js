@@ -3,7 +3,7 @@ import Novi from '../../assets/Novi.png'
 import {useNavigate} from "react-router-dom";
 import NavBar from "../../components/nav-bar/NavBar";
 import Button from "../../components/button/Button";
-import companyprofile from "./CompanyProfile.css"
+import Cprofile from "./CompanyProfile.css"
 
 function CompanyProfile() {
 

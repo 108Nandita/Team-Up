@@ -3,7 +3,9 @@ import Button from '../../components/button/Button';
 import { useNavigate } from 'react-router-dom';
 import NavBar from '../../components/nav-bar/NavBar';
 import axios from 'axios';
+import { API_KEY } from "../../key";
 import createevent from "./CreateEvent.css"
+
 
 
 function CreateEvent() {
@@ -26,7 +28,6 @@ function CreateEvent() {
     async function handleSubmit(e) {
         e.preventDefault();
         const { category, location, start, end, within, limit } = formstate;
-        const apikey = 'lhOE6Uv3BMZ_6valBREVlSaF05lYHlljr3DQJIvN';
 
 
         if (start && end && start > end) {
@@ -35,6 +36,11 @@ function CreateEvent() {
             const currentDate = today.toISOString().slice(0, 10);
             setFormstate((prevFormstate) => ({ ...prevFormstate, start: currentDate, end: currentDate }));
             return;        }
+
+        if (!category || !location || !start|| !end) {
+            alert('Vul alle dikgedrukte velden in , deze zijn vereist om een zoekopdracht uit te voeren');
+            return;
+        }
 
         try {
             const params = {};
@@ -70,7 +76,7 @@ function CreateEvent() {
 
             const response = await axios.get(`https://api.predicthq.com/v1/events/?category=${category}&location=${location}&start=${start}&end=${end}&within=${within}&limit=${limit}&`, {
                 headers: {
-                    Authorization: `Bearer ${apikey}`,
+                    Authorization: `Bearer ${API_KEY}`,
                     Accept: 'application/json',
                 },
                 params,
@@ -119,7 +125,7 @@ function CreateEvent() {
 
                     </body>
                 </>
-             :
+                :
                 <>
                     <body >
                     <header className="outer-container" >
@@ -140,7 +146,7 @@ function CreateEvent() {
                     <br/>
                     <main className="outer-container" >
                         <form className="inner-container1" onSubmit={handleSubmit}>
-                            <label htmlFor="category" style={{ display: "inline-block", width: "140px" }}>Category:</label>
+                            <label htmlFor="category" className="obliged" style={{ display: "inline-block", width: "140px" }}>Category:</label>
                             <select name="category" id="category" value={formstate.category} onChange=
                                 {handleFormChange}>
                                 <option value="">--Select a category--</option>
@@ -151,17 +157,17 @@ function CreateEvent() {
                             </select>
                             <br />
                             <br />
-                            <label htmlFor="location" style={{ display: "inline-block", width: "140px" }}>Location:</label>
+                            <label htmlFor="location" className="obliged" style={{ display: "inline-block", width: "140px" }}>Location:</label>
                             <input type="text" name="location" id="location" value={formstate.location} onChange=
                                 {handleFormChange} />
                             <br />
                             <br />
-                            <label htmlFor="start" style={{ display: "inline-block", width: "140px" }}>Start:</label>
+                            <label htmlFor="start" className="obliged" style={{ display: "inline-block", width: "140px" }}>Start:</label>
                             <input type="date" name="start" id="start" value={formstate.start} onChange=
                                 {handleFormChange} />
                             <br />
                             <br />
-                            <label htmlFor="end" style={{ display: "inline-block", width: "140px" }}>End:</label>
+                            <label htmlFor="end" className="obliged" style={{ display: "inline-block", width: "140px" }}>End:</label>
                             <input type="date" name="end" id="end" value={formstate.end} onChange=
                                 {handleFormChange} />
                             <br />
@@ -199,4 +205,3 @@ function CreateEvent() {
 }
 
 export default CreateEvent;
-

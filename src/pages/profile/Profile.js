@@ -1,11 +1,11 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { AuthContext } from "../../context/AuthContext";
+import React, {useContext, useState, useEffect} from 'react';
+import {AuthContext} from "../../context/AuthContext";
 import axios from "axios";
 import NavBar from "../../components/nav-bar/NavBar";
 import ProfilePicture from "./Profile.css"
 
 function Profile() {
-    const { user, setUser } = useContext(AuthContext);
+    const {user, setUser} = useContext(AuthContext);
     const [username, setUsername] = useState(user.username);
     const [email, setEmail] = useState(user.email);
     const [password, setPassword] = useState("");
@@ -15,8 +15,6 @@ function Profile() {
     const [imagePreview, setImagePreview] = useState(user.image);
     const [message, setMessage] = useState("");
     const [profilePic, setProfilePic] = useState("");
-
-
 
 
     useEffect(() => {
@@ -45,7 +43,7 @@ function Profile() {
                     email: email,
                     password: newPassword,
                 },
-                { withCredentials: true }
+                {withCredentials: true}
             );
             setUser(response.data.user);
             setMessage("Profile updated successfully!");
@@ -92,7 +90,7 @@ function Profile() {
                 <form className="inner-container1, " onSubmit={updateUser}>
                     <div className="position">
                         <div>
-                            <label style={{ display: "inline-block", width: "140px" }}>
+                            <label style={{display: "inline-block", width: "140px"}}>
                                 Username:
                                 <input
                                     type="text"
@@ -104,7 +102,7 @@ function Profile() {
                             <br/>
                             <br/>
 
-                            <label style={{ display: "inline-block", width: "140px" }}>
+                            <label style={{display: "inline-block", width: "140px"}}>
                                 Email:
                                 <input
                                     type="email"
@@ -119,14 +117,15 @@ function Profile() {
 
                         <div className=".profile-pic.inner-container1">
                             {profilePic && (
-                                <img className="profile-picture" src={URL.createObjectURL(profilePic)} alt="Profielfoto" />
+                                <img className="profile-picture" src={URL.createObjectURL(profilePic)}
+                                     alt="Profielfoto"/>
                             )}
                         </div>
                     </div>
                     <br/>
                     <br/>
 
-                    <label style={{ display: "inline-block", width: "140px" }}>
+                    <label style={{display: "inline-block", width: "140px"}}>
                         Password:
                         <input
                             type="password"
@@ -134,7 +133,7 @@ function Profile() {
                             onChange={(e) => setPassword(e.target.value)}
                         />
                     </label>
-                    <label style={{ display: "inline-block", width: "140px" }}>
+                    <label style={{display: "inline-block", width: "140px"}}>
                         New password:
                         <input
                             type="password"
@@ -142,7 +141,7 @@ function Profile() {
                             onChange={(e) => setNewPassword(e.target.value)}
                         />
                     </label>
-                    <label style={{ display: "inline-block", width: "140px" }}>
+                    <label style={{display: "inline-block", width: "140px"}}>
                         Confirm new password:
                         <input
                             type="password"
@@ -154,7 +153,7 @@ function Profile() {
                     <br/>
                     <br/>
 
-                    <label style={{ display: "inline-block", width: "140px" }}>
+                    <label style={{display: "inline-block", width: "140px"}}>
                         Profielfoto:
                         <input
                             type="file"
