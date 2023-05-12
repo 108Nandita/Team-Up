@@ -15,6 +15,7 @@ function Register() {
     const [usernameError, setUsernameError] = useState("");
     const [passwordError, setPasswordError] = useState("");
 
+
     async function registerUser(e) {
         e.preventDefault();
 
