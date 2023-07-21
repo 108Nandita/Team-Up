@@ -1,26 +1,24 @@
-import React, {useContext, useState, useEffect} from 'react';
-import {AuthContext} from "../../context/AuthContext";
+import React, { useContext, useState, useEffect } from 'react';
+import { AuthContext } from "../../context/AuthContext";
 import axios from "axios";
 import NavBar from "../../components/nav-bar/NavBar";
-import ProfilePicture from "./Profile.css"
+import Button from "../../components/button/Button";
+import Input from "../../components/input/Input"
+import ProfilePicture from "./Profile.css";
 
 function Profile() {
-    const {user, setUser} = useContext(AuthContext);
+    const { user, setUser } = useContext(AuthContext);
     const [username, setUsername] = useState(user.username);
     const [email, setEmail] = useState(user.email);
     const [password, setPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
-    const [image, setImage] = useState("");
-    const [imagePreview, setImagePreview] = useState(user.image);
+    const [profilePic, setProfilePic] = useState(null);
     const [message, setMessage] = useState("");
-    const [profilePic, setProfilePic] = useState("");
-
 
     useEffect(() => {
         setUsername(user.username);
         setEmail(user.email);
-        setImagePreview(user.image);
     }, [user]);
 
     async function updateUser(e) {
@@ -36,31 +34,14 @@ function Profile() {
         }
 
         try {
-            const response = await axios.put(
-                `https://frontend-educational-backend.herokuapp.com/api/users/${user._id}`,
-                {
-                    username: username,
-                    email: email,
-                    password: newPassword,
-                },
-                {withCredentials: true}
-            );
-            setUser(response.data.user);
-            setMessage("Profile updated successfully!");
-        } catch (e) {
-            console.error(e);
-            setMessage("Something went wrong. Please try again later.");
-        }
-    }
+            const formData = new FormData();
+            formData.append("username", username);
+            formData.append("email", email);
+            formData.append("password", newPassword);
+            formData.append("image", profilePic);
 
-    async function handleImageUpload(e) {
-        e.preventDefault();
-        const file = e.target.files[0];
-        const formData = new FormData();
-        formData.append("image", file);
-        try {
-            const response = await axios.post(
-                `https://frontend-educational-backend.herokuapp.com/api/users/${user._id}/image`,
+            const response = await axios.put(
+                `https://frontend-educational-backend.herokuapp.com/api/user`,
                 formData,
                 {
                     withCredentials: true,
@@ -69,16 +50,23 @@ function Profile() {
                     },
                 }
             );
-            setImagePreview(response.data.image);
-            setUser(response.data.user);
-        } catch (e) {
-            console.error(e);
+
+            setUser(response.data);
+            setMessage("Profile updated successfully!");
+        } catch (error) {
+            console.error(error);
+            setMessage("Something went wrong. Please try again later.");
         }
+    }
+
+    function handleImageUpload(e) {
+        e.preventDefault();
+        setProfilePic(e.target.files[0]);
     }
 
     return (
         <>
-            <NavBar/>
+            <NavBar />
             <header className="outer-container">
                 <div className="inner-container">
                     <h1>Profile</h1>
@@ -87,87 +75,86 @@ function Profile() {
             </header>
 
             <main className="outer-container">
-                <form className="inner-container1, " onSubmit={updateUser}>
+                <form className="inner-container1" onSubmit={updateUser}>
                     <div className="position">
                         <div>
-                            <label style={{display: "inline-block", width: "140px"}}>
-                                Username:
-                                <input
-                                    type="text"
-                                    value={username}
-                                    onChange={(e) => setUsername(e.target.value)}
-                                />
-                            </label>
+                            <Input
+                                label="Username"
+                                name="username"
+                                type="text"
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
+                            />
 
-                            <br/>
-                            <br/>
+                            <br />
+                            <br />
 
-                            <label style={{display: "inline-block", width: "140px"}}>
-                                Email:
-                                <input
-                                    type="email"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                />
-                            </label>
+                            <Input
+                                label="Email"
+                                name="email"
+                                type="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
                         </div>
 
-                        <br/>
-                        <br/>
+                        <br />
+                        <br />
 
                         <div className=".profile-pic.inner-container1">
                             {profilePic && (
-                                <img className="profile-picture" src={URL.createObjectURL(profilePic)}
-                                     alt="Profielfoto"/>
+                                <img
+                                    className="profile-picture"
+                                    src={URL.createObjectURL(profilePic)}
+                                    alt="Profielfoto"
+                                />
                             )}
                         </div>
                     </div>
-                    <br/>
-                    <br/>
+                    <br />
+                    <br />
 
-                    <label style={{display: "inline-block", width: "140px"}}>
-                        Password:
-                        <input
-                            type="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
-                    </label>
-                    <label style={{display: "inline-block", width: "140px"}}>
-                        New password:
-                        <input
-                            type="password"
-                            value={newPassword}
-                            onChange={(e) => setNewPassword(e.target.value)}
-                        />
-                    </label>
-                    <label style={{display: "inline-block", width: "140px"}}>
-                        Confirm new password:
-                        <input
-                            type="password"
-                            value={confirmPassword}
-                            onChange={(e) => setConfirmPassword(e.target.value)}
-                        />
-                    </label>
+                    <Input
+                        label="Password"
+                        name="password"
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                    <Input
+                        label="New password"
+                        name="newPassword"
+                        type="password"
+                        value={newPassword}
+                        onChange={(e) => setNewPassword(e.target.value)}
+                    />
+                    <Input
+                        label="Confirm new password"
+                        name="confirmPassword"
+                        type="password"
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                    />
 
-                    <br/>
-                    <br/>
+                    <br />
+                    <br />
 
-                    <label style={{display: "inline-block", width: "140px"}}>
+                    <label style={{ display: "inline-block", width: "140px" }}>
                         Profielfoto:
                         <input
                             type="file"
-                            onChange={(e) => setProfilePic(e.target.files[0])}
+                            accept="image/*"
+                            onChange={handleImageUpload}
                         />
                     </label>
 
-                    <br/>
-                    <br/>
+                    <br />
+                    <br />
 
-                    <button type="submit">Wijzigingen opslaan</button>
+                    <Button type="submit">Wijzigingen opslaan</Button>
 
-                    <br/>
-                    <br/>
+                    <br />
+                    <br />
                 </form>
             </main>
 
@@ -186,4 +173,3 @@ function Profile() {
 }
 
 export default Profile;
-

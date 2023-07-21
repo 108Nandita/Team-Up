@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import { Link } from "react-router-dom";
 import teamBuildingLogo from '../../assets/TeamBuildingLogo.png'
+import Input from '../../components/input/Input'
+import Button from '../../components/button/Button'
 import signInStyle from './SignIn.css'
 
 
@@ -19,18 +21,18 @@ function SignIn() {
 
 
     async function handleLogin(e) {
-        e.preventDefault()
+        e.preventDefault();
         try {
-            const response = await axios.post('https://frontend-educational-backend.herokuapp.com/api/auth/signin',{
+            const response = await axios.post('https://frontend-educational-backend.herokuapp.com/api/auth/signin', {
                 username: username,
                 password: password,
-            })
+            });
             navigate('/home');
-            console.log( response.data )
-            login( response.data.accessToken )
-        } catch ( e ) {
-            console.error( e )
-            setError("De opgegeven combinatie van loginnaam en wachtwoord is ongeldig.");
+            console.log(response.data);
+            login(response.data.accessToken);
+        } catch (e) {
+            console.error(e);
+            setError("De opgegeven combinatie van inlognaam en wachtwoord is ongeldig.");
         }
     }
 
@@ -41,6 +43,7 @@ function SignIn() {
                     <img src={teamBuildingLogo} alt="Logo Building" id="logoBuilding"/>
                 </div>
             </header>
+
             <br/>
 
             <body>
@@ -49,16 +52,35 @@ function SignIn() {
                     <h1>Login</h1>
                     {error && <div className="error">{error}</div>}
                     <br/><br/>
-                    <form onSubmit={ handleLogin }>
-                        <input placeholder="Username" type="username" value={ username } onChange={ e => setUsername( e.target.value ) }/>
+                    <form onSubmit={handleLogin}>
+                        <Input
+                            label="Username"
+                            name="username"
+                            type="text"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                        />
+
+                        <br/>
+
+                        <Input
+                            label="Password"
+                            name="password"
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+
                         <br/>
                         <br/>
-                        <input placeholder="Password" type="password" value={ password } onChange={ e => setPassword( e.target.value ) }/>
+
+                        <Button type="submit" className="login-button">
+                            Login
+                        </Button>
+
                         <br/>
                         <br/>
-                        <button type="submit">Login</button>
-                        <br/>
-                        <br/>
+
                     </form>
 
                     <p>Heb je nog geen account? <Link to="/register">Registreer</Link> je dan eerst.</p>

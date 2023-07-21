@@ -1,10 +1,10 @@
 import React, {useContext} from 'react';
 
-function Button({children, clickHandler, isDisabled, className, width}) {
+function Button({children, clickHandler, isDisabled, className, width, type}) {
 
     return (
         <button
-            type="button"
+            type={type}
             className={className}
             disabled={isDisabled}
             onClick={clickHandler}

@@ -1,24 +1,24 @@
-import React, {createContext, useEffect, useState} from "react";
-import {useNavigate} from "react-router-dom";
+import React, { createContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export const AuthContext = createContext({});
 
-function AuthContextProvider({children}) {
+function AuthContextProvider({ children }) {
     const [auth, setAuth] = useState({
         isAuth: false,
         user: null,
         status: "pending"
     });
+    const [error, setError] = useState(null);
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     useEffect(() => {
-
-        const storedToken = localStorage.getItem('token')
+        const storedToken = localStorage.getItem("token");
 
         if (storedToken) {
-            console.log("De gebruiker is NOG STEEDS ingelogd")
+            console.log("De gebruiker is NOG STEEDS ingelogd");
             void fetchUserData(storedToken);
         } else {
             setAuth({
@@ -26,19 +26,21 @@ function AuthContextProvider({children}) {
                 isAuth: false,
                 user: null,
                 status: "done"
-            })
+            });
         }
-    }, [])
-
+    }, []);
 
     async function fetchUserData(jwt, redirect) {
         try {
-            const response = await axios.get('https://frontend-educational-backend.herokuapp.com/api/user', {
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${jwt}`,
+            const response = await axios.get(
+                "https://frontend-educational-backend.herokuapp.com/api/user",
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${jwt}`
+                    }
                 }
-            });
+            );
 
             setAuth({
                 ...auth,
@@ -49,41 +51,51 @@ function AuthContextProvider({children}) {
                     username: response.data.username
                 },
                 status: "done"
-            })
-            if (redirect) {
-                navigate(redirect)
-            }
+            });
 
+            if (redirect) {
+                navigate(redirect);
+            }
         } catch (e) {
-            console.error(e)
+            console.error(e);
             setAuth({
                 ...auth,
                 isAuth: false,
                 user: null,
                 status: "done"
-            })
+            });
+            setError("Fout tijdens het ophalen van gebruikersgegevens. Probeer het later opnieuw.");
         }
     }
 
     async function login(jwt) {
-        console.log("Gebruiker is ingelogd!");
-        localStorage.setItem("token", jwt);
+        try {
+            console.log("Gebruiker is ingelogd!");
+            localStorage.setItem("token", jwt);
 
-        void await fetchUserData(jwt);
-        navigate("/home");
+            void await fetchUserData(jwt);
+            navigate("/home");
+        } catch (error) {
+            console.error("Fout tijdens het inloggen:", error);
+            setError("Fout tijdens het inloggen. Probeer het later opnieuw.");
+        }
     }
 
-
     function logout() {
-        console.log("De gebruiker is uitgelogd")
-        localStorage.removeItem('token')
-        setAuth({
-            ...auth,
-            isAuth: false,
-            user: null,
-            status: "done"
-        })
-        navigate("/signin")
+        try {
+            console.log("De gebruiker is uitgelogd");
+            localStorage.removeItem("token");
+            setAuth({
+                ...auth,
+                isAuth: false,
+                user: null,
+                status: "done"
+            });
+            navigate("/signin");
+        } catch (error) {
+            console.error("Fout tijdens het uitloggen:", error);
+            setError("Fout tijdens het uitloggen. Probeer het later opnieuw.");
+        }
     }
 
     const contextData = {
@@ -92,15 +104,17 @@ function AuthContextProvider({children}) {
         status: auth.status,
         login: login,
         logout: logout
-    }
+    };
 
     return (
         <AuthContext.Provider value={contextData}>
-            {auth.status === "done" ? children : <p>Loading...</p>}
+            {auth.status === "done" ? (
+                children
+            ) : (
+                <p>{error || "Loading..."}</p>
+            )}
         </AuthContext.Provider>
-    )
+    );
 }
 
 export default AuthContextProvider;
-
-

@@ -14,7 +14,7 @@ function Home() {
     return (
         <>
             <NavBar/>
-            <body className="outer-container" >
+            <div className="outer-container" >
             <header className="inner-container" >
                 <div>
                     <img className="home-image"  src={teambuilding} alt="Team Building"/>
@@ -24,46 +24,46 @@ function Home() {
                 <div>
 
                     <section>
-                        <Button className="home-button" isDisabled={false} clickHandler={() => navigate('/event')}>
+                        <Button type="button" className="home-button" isDisabled={false} clickHandler={() => navigate('/event')}>
                             Event
                         </Button>
                     </section>
 
                     <section>
-                        <Button className="home-button" isDisabled={false}
+                        <Button type="button" className="home-button" isDisabled={false}
                                 clickHandler={() => navigate('/company-profile')}>
                             Company
                         </Button>
                     </section>
 
                     <section>
-                        <Button className="home-button" isDisabled={false}
+                        <Button type="button" className="home-button" isDisabled={false}
                                 clickHandler={() => navigate('/create-event')}>
                             Create
                         </Button>
                     </section>
 
                     <section>
-                        <Button className="home-button" isDisabled={false} clickHandler={() => navigate('/share')}>
+                        <Button type="button" className="home-button" isDisabled={false} clickHandler={() => navigate('/share')}>
                             Share
                         </Button>
                     </section>
 
                     <section>
-                        <Button className="home-button" isDisabled={false} clickHandler={() => navigate('/home')}>
+                        <Button type="button" className="home-button" isDisabled={false} clickHandler={() => navigate('/home')}>
                             Forms
                         </Button>
                     </section>
 
                     <section>
-                        <Button className="home-button" isDisabled={false} clickHandler={() => navigate('/home')}>
+                        <Button type="button" className="home-button" isDisabled={false} clickHandler={() => navigate('/home')}>
                             Statistics
                         </Button>
                     </section>
 
                 </div>
             </main>
-            </body>
+            </div>
         </>
     );
 }

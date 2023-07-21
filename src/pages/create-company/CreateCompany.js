@@ -1,118 +1,160 @@
-import React from 'react';
-import Novi from '../../assets/Novi.png'
-import {useNavigate} from "react-router-dom";
-import NavBar from "../../components/nav-bar/NavBar";
-import Button from "../../components/button/Button";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import NavBar from '../../components/nav-bar/NavBar';
+import Button from '../../components/button/Button';
+import Input from '../../components/input/Input';
 
-
-function CompanyProfile() {
-
+function CreateCompany() {
     const navigate = useNavigate();
+    const [formState, setFormState] = useState({
+        companyName: '',
+        city: '',
+        address: '',
+        postalCode: '',
+        phoneNumber: '',
+        contactPerson: '',
+        logo: null,
+    });
 
+    function handleFormChange(e) {
+        const { name, value, files } = e.target;
+        if (files && files[0]) {
+            setFormState((prevFormState) => ({
+                ...prevFormState,
+                [name]: files[0],
+            }));
+        } else {
+            setFormState((prevFormState) => ({
+                ...prevFormState,
+                [name]: value,
+            }));
+        }
+    }
+
+    function handleLogoChange(e) {
+        const logoFile = e.target.files[0];
+        setFormState((prevFormState) => ({ ...prevFormState, logo: logoFile }));
+    }
+
+    function handleSubmit(e) {
+        e.preventDefault();
+        const companyProfile = {
+            ...formState,
+            logo: formState.logo ? URL.createObjectURL(formState.logo) : null,
+        };
+        localStorage.setItem('companyProfile', JSON.stringify(companyProfile));
+        navigate('/company-profile');
+    }
 
     return (
         <>
-            <NavBar/>
-            <body>
-            <header className="outer-container">
-                <div className="profile-container">
-                    <h1><strong>Profile</strong></h1>
-                    <br/>
-                    <img src={Novi} alt="Novi"/>
-                </div>
-            </header>
-            <main className="outer-container">
-                <div className="inner-container">
+            <NavBar />
 
-                    <section>
-                        <Button className="details" isDisabled={false}
-                                clickHandler={() => navigate('/company-profile')}>
-                            Details
-                        </Button>
+            <div>
 
-                        <Button className="event" isDisabled={false} clickHandler={() => navigate('/company-profile')}>
-                            Event
-                        </Button>
+                <header className="outer-container">
+                    <div className="profile-container">
+                        <h1>
+                            <strong>Create Company</strong>
+                        </h1>
+                    </div>
+                </header>
 
-                        <Button className="history" isDisabled={false}
-                                clickHandler={() => navigate('/company-profile')}>
-                            History
-                        </Button>
+                <main className="outer-container">
+                    <div className="inner-container">
+                        <form onSubmit={handleSubmit}>
+                            <Input
+                                label="Company name"
+                                name="companyName"
+                                type="text"
+                                value={formState.companyName}
+                                onChange={handleFormChange}
+                            />
 
-                        <Button className="finance" isDisabled={false}
-                                clickHandler={() => navigate('/company-profile')}>
-                            Finance
-                        </Button>
+                            <br />
+                            <br />
 
-                        <Button className="forms" isDisabled={false} clickHandler={() => navigate('/company-profile')}>
-                            Forms
-                        </Button>
-                    </section>
-                    <br/>
-                    <br/>
-                    <form>
-                        <div className="form-group">
-                            <label htmlFor="companyName" style={{display: "inline-block", width: "140px"}}>Company
-                                name:</label>
-                            <input type="text" name="companyName" id="companyName" value="Hogeschool NOVI B.V."
-                                   style={{display: "inline-block"}}/>
-                        </div>
-                        <br/>
-                        <br/>
-                        <div className="form-group">
-                            <label htmlFor="city" style={{display: "inline-block", width: "140px"}}>City:</label>
-                            <input type="text" name="city" id="city" value="Utrecht" style={{display: "inline-block"}}/>
-                        </div>
+                            <Input
+                                label="City"
+                                name="city"
+                                type="text"
+                                value={formState.city}
+                                onChange={handleFormChange}
+                            />
 
-                        <br/>
-                        <br/>
+                            <br />
+                            <br />
 
-                        <div className="form-group">
-                            <label htmlFor="address" style={{display: "inline-block", width: "140px"}}>Address: </label>
-                            <input type="text" name="city" id="city" value=" Newtonlaan 247"
-                                   style={{display: "inline-block"}}/>
-                        </div>
+                            <Input
+                                label="Address"
+                                name="address"
+                                type="text"
+                                value={formState.address}
+                                onChange={handleFormChange}
+                            />
 
-                        <br/>
-                        <br/>
+                            <br />
+                            <br />
 
-                        <div className="form-group">
-                            <label htmlFor="postal-code" style={{display: "inline-block", width: "140px"}}>Postal
-                                Code: </label>
-                            <input type="text" name="postal-code" id="postal-code" value="3584 BH"
-                                   style={{display: "inline-block"}}/>
-                        </div>
+                            <Input
+                                label="PostalCode"
+                                name="postalCode"
+                                type="text"
+                                value={formState.postalCode}
+                                onChange={handleFormChange}
+                            />
 
-                        <br/>
-                        <br/>
+                            <br />
+                            <br />
 
-                        <div className="form-group">
-                            <label htmlFor="phone-number" style={{display: "inline-block", width: "140px"}}>Phone
-                                Number: </label>
-                            <input type="text" name="phone-number" id="phone-number" value="030 307 3200"
-                                   style={{display: "inline-block"}}/>
-                        </div>
+                            <Input
+                            label="PhoneNumber"
+                            name="phoneNumber"
+                            type="text"
+                            value={formState.phoneNumber}
+                            onChange={handleFormChange}
+                        />
 
-                        <br/>
-                        <br/>
+                            <br />
+                            <br />
 
-                        <div className="form-group">
-                            <label htmlFor="contact-person" style={{display: "inline-block", width: "140px"}}>Contact
-                                Person: </label>
-                            <input type="text" name="city" id="city" value="Sammetje Barnhoorn"
-                                   style={{display: "inline-block"}}/>
-                        </div>
-                    </form>
-                    <br/>
-                    <br/>
-                </div>
+                            <Input
+                                label="ContactPerson"
+                                name="contactPerson"
+                                type="text"
+                                value={formState.contactPerson}
+                                onChange={handleFormChange}
+                            />
 
-            </main>
-            </body>
+                            <br />
+                            <br />
+
+                            <div className="form-group">
+                                <label htmlFor="logo" style={{ display: 'inline-block', width: '140px' }}>
+                                    Logo:
+                                </label>
+                                <input
+                                    type="file"
+                                    name="logo"
+                                    id="logo"
+                                    accept="image/*"
+                                    onChange={handleLogoChange}
+                                    style={{ display: 'inline-block' }}
+                                />
+                            </div>
+
+                            <br />
+                            <br />
+
+                            <Button type="submit" isDisabled={false} clickHandler={handleSubmit}>
+                                Create Company
+                            </Button>
+                        </form>
+                    </div>
+                </main>
+            </div>
         </>
-    )
-};
+    );
+}
 
-
-export default CompanyProfile;
-
+export default CreateCompany;
